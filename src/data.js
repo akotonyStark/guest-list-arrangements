@@ -136,7 +136,7 @@ export const TASKS = [
     id: 14,
     name: 'Patrick Wilson',
     gender: 'M',
-    tableID: 3,
+    tableID: null,
     image: function(){
         return  this.gender == 'M' ? man : woman
     },
