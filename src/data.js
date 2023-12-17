@@ -14,7 +14,7 @@ export const TASKS = [
   },
   {
     id: 2,
-    name: 'Augustt Stark',
+    name: 'Augustine Ampofo',
     gender: 'M',
     tableID: null,
     image: function(){
