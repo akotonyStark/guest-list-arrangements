@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { FaBeer, FaPencilAlt } from "react-icons/fa";
 function GuestList({ guests }) {
 
   const [guestList, setguestList] = useState([]);
+  const [numOfTables, setNumOfTables] = useState([{tableID: 1, name:`Groom's Family`}, {tableID: 2, name:`Bride's Family`}])
 
 
   useEffect(() => {
@@ -52,7 +54,7 @@ function GuestList({ guests }) {
     console.log(list, 'List')
 
     let updated = list.map((item) => {
-      if (item.id.toString() === guestID.toString()) {
+      if (item.id == guestID) {
         item.tableID = tableID;
         item.assigned = isAssigned
       }
@@ -61,6 +63,11 @@ function GuestList({ guests }) {
     // console.log(updated)
     setguestList(updated);
   };
+
+  const handleAddTable = () => {
+    let newTable = {tableID: numOfTables.length + 1, name:''}
+    setNumOfTables([...numOfTables, newTable])
+  }
 
 
   // const tasks  = state;
@@ -73,6 +80,7 @@ function GuestList({ guests }) {
   return (
     <div style={{display:'grid', gridTemplateColumns:'1fr 4fr', gap: 50,  }}>
 
+      {/* Overall guest List  */}
       <div className="container">
         <div
           className="order small-box"
@@ -89,7 +97,7 @@ function GuestList({ guests }) {
 
                 <div className=" main-list">
                   <h4>Guest List</h4>
-                  <button style={{ width: "100%" }}>+</button>
+                  <button style={{ width: "100%",  }}>Reset</button>
                   <div className="main-list">
                     {guestList?.filter((item) => item.assigned == false).map((task, idx) => (
                       <div
@@ -118,86 +126,51 @@ function GuestList({ guests }) {
       </div>
 
       <div className="tables-section">
-        <div
-          className="pending small-box"
-          onDragLeave={(e) => onDragLeave(e)}
-          onDragEnter={(e) => onDragEnter(e)}
-          onDragEnd={(e) => onDragEnd(e)}
-          onDragOver={(e) => onDragOver(e)}
-          onDrop={(e) => onDrop(e, false, "1")}
-        >
-          <section className="drag_container">
-            <div className="container">
-              <div className="drag_column">
-                <div className="drag_row">
-                  <h4>Table 1</h4>
-                  <button style={{ width: "100%", marginBottom: 10 }}>+</button>
-                  {guestList?.filter((item) => item.tableID == 1).map((task, idx) => (
-                    <div
-                      className="card"
-                      key={idx}
-                      id={task.id}
-                      draggable
-                      onDragStart={(e) => onDragStart(e)}
-                      onDragEnd={(e) => onDragEnd(e)}
-                    >
-                      <div className="img">
-                        <img src={task.image()} alt="box" />
+        {numOfTables.map((table) => (  
+           <div
+           key={table.tableID}
+            className="done small-box"
+            onDragLeave={(e) => onDragLeave(e)}
+            onDragEnter={(e) => onDragEnter(e)}
+            onDragEnd={(e) => onDragEnd(e)}
+            onDragOver={(e) => onDragOver(e)}
+            onDrop={(e) => onDrop(e, true, table.tableID)}
+          >
+            <section className="drag_container">
+              <div className="container">
+                <div className="drag_column">
+                  <div className="drag_row" >
+                    <h4> {table.name || `Table ${table.tableID}`} <FaPencilAlt style={{cursor:'pointer'}} title="Click to Edit Table Name"/> </h4>
+                    <button style={{ width: "100%", marginBottom: 10 }} onClick={handleAddTable}>+</button>
+  
+                    {guestList?.filter((item) => item.tableID == table.tableID).map((task, idx) => (
+                      <div
+                        className="card"
+                        key={idx}
+                        id={task.id}
+                        draggable
+                        onDragStart={(e) => onDragStart(e)}
+                        onDragEnd={(e) => onDragEnd(e)}
+                      >
+                        <div className="img">
+                          <img src={task.image()} alt="box" />
+                        </div>
+                        <div className="card_right">
+                          <div className="status">{task.name}</div>
+                        </div>
                       </div>
-                      <div className="card_right">
-                        <div className="status">{task.name}</div>
-                      </div>
-
-                    </div>
-
-                  ))}
-
+                    ))}
+  
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        </div>
+            </section>
+          </div>) )}
+       
 
-        <div
-          className="done small-box"
-          onDragLeave={(e) => onDragLeave(e)}
-          onDragEnter={(e) => onDragEnter(e)}
-          onDragEnd={(e) => onDragEnd(e)}
-          onDragOver={(e) => onDragOver(e)}
-          onDrop={(e) => onDrop(e, true, "2")}
-        >
-          <section className="drag_container">
-            <div className="container">
-              <div className="drag_column">
-                <div className="drag_row" >
-                  <h4>Table 2</h4>
-                  <button style={{ width: "100%", marginBottom: 10 }}>+</button>
+       
 
-                  {guestList?.filter((item) => item.tableID == 2).map((task, idx) => (
-                    <div
-                      className="card"
-                      key={idx}
-                      id={task.id}
-                      draggable
-                      onDragStart={(e) => onDragStart(e)}
-                      onDragEnd={(e) => onDragEnd(e)}
-                    >
-                      <div className="img">
-                        <img src={task.image()} alt="box" />
-                      </div>
-                      <div className="card_right">
-                        <div className="status">{task.name}</div>
-                      </div>
-                    </div>
-                  ))}
-
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div
+        {/* <div
           className="done small-box"
           onDragLeave={(e) => onDragLeave(e)}
           onDragEnter={(e) => onDragEnter(e)}
@@ -232,239 +205,9 @@ function GuestList({ guests }) {
               </div>
             </div>
           </section>
-        </div>
+        </div> */}
 
-        <div
-          className="pending small-box"
-          onDragLeave={(e) => onDragLeave(e)}
-          onDragEnter={(e) => onDragEnter(e)}
-          onDragEnd={(e) => onDragEnd(e)}
-          onDragOver={(e) => onDragOver(e)}
-          onDrop={(e) => onDrop(e, false, "1")}
-        >
-          <section className="drag_container">
-            <div className="container">
-              <div className="drag_column">
-                <div className="drag_row">
-                  <h4>Table 1</h4>
-                  <button style={{ width: "100%", marginBottom: 10 }}>+</button>
-                  {guestList?.filter((item) => item.tableID == 1).map((task, idx) => (
-                    <div
-                      className="card"
-                      key={idx}
-                      id={task.id}
-                      draggable
-                      onDragStart={(e) => onDragStart(e)}
-                      onDragEnd={(e) => onDragEnd(e)}
-                    >
-                      <div className="img">
-                        <img src={task.image()} alt="box" />
-                      </div>
-                      <div className="card_right">
-                        <div className="status">{task.name}</div>
-                      </div>
-
-                    </div>
-
-                  ))}
-
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div
-          className="done small-box"
-          onDragLeave={(e) => onDragLeave(e)}
-          onDragEnter={(e) => onDragEnter(e)}
-          onDragEnd={(e) => onDragEnd(e)}
-          onDragOver={(e) => onDragOver(e)}
-          onDrop={(e) => onDrop(e, true, "2")}
-        >
-          <section className="drag_container">
-            <div className="container">
-              <div className="drag_column">
-                <div className="drag_row" >
-                  <h4>Table 2</h4>
-                  <button style={{ width: "100%", marginBottom: 10 }}>+</button>
-
-                  {guestList?.filter((item) => item.tableID == 2).map((task, idx) => (
-                    <div
-                      className="card"
-                      key={idx}
-                      id={task.id}
-                      draggable
-                      onDragStart={(e) => onDragStart(e)}
-                      onDragEnd={(e) => onDragEnd(e)}
-                    >
-                      <div className="img">
-                        <img src={task.image()} alt="box" />
-                      </div>
-                      <div className="card_right">
-                        <div className="status">{task.name}</div>
-                      </div>
-                    </div>
-                  ))}
-
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div
-          className="done small-box"
-          onDragLeave={(e) => onDragLeave(e)}
-          onDragEnter={(e) => onDragEnter(e)}
-          onDragEnd={(e) => onDragEnd(e)}
-          onDragOver={(e) => onDragOver(e)}
-          onDrop={(e) => onDrop(e, true, "3")}
-        >
-          <section className="drag_container">
-            <div className="container">
-              <div className="drag_column">
-                <div className="drag_row">
-                  <h4>Table 3</h4>
-                  <button style={{ width: "100%", marginBottom: 10 }}>+</button>
-                  {guestList?.filter((item) => item.tableID == 3).map((task, idx) => (
-                    <div
-                      className="card"
-                      key={idx}
-                      id={task.id}
-                      draggable
-                      onDragStart={(e) => onDragStart(e)}
-                      onDragEnd={(e) => onDragEnd(e)}
-                    >
-                      <div className="img">
-                        <img src={task.image()} alt="box" />
-                      </div>
-                      <div className="card_right">
-                        <div className="status">{task.name}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div
-          className="pending small-box"
-          onDragLeave={(e) => onDragLeave(e)}
-          onDragEnter={(e) => onDragEnter(e)}
-          onDragEnd={(e) => onDragEnd(e)}
-          onDragOver={(e) => onDragOver(e)}
-          onDrop={(e) => onDrop(e, false, "1")}
-        >
-          <section className="drag_container">
-            <div className="container">
-              <div className="drag_column">
-                <div className="drag_row">
-                  <h4>Table 1</h4>
-                  <button style={{ width: "100%", marginBottom: 10 }}>+</button>
-                  {guestList?.filter((item) => item.tableID == 1).map((task, idx) => (
-                    <div
-                      className="card"
-                      key={idx}
-                      id={task.id}
-                      draggable
-                      onDragStart={(e) => onDragStart(e)}
-                      onDragEnd={(e) => onDragEnd(e)}
-                    >
-                      <div className="img">
-                        <img src={task.image()} alt="box" />
-                      </div>
-                      <div className="card_right">
-                        <div className="status">{task.name}</div>
-                      </div>
-
-                    </div>
-
-                  ))}
-
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div
-          className="done small-box"
-          onDragLeave={(e) => onDragLeave(e)}
-          onDragEnter={(e) => onDragEnter(e)}
-          onDragEnd={(e) => onDragEnd(e)}
-          onDragOver={(e) => onDragOver(e)}
-          onDrop={(e) => onDrop(e, true, "2")}
-        >
-          <section className="drag_container">
-            <div className="container">
-              <div className="drag_column">
-                <div className="drag_row" >
-                  <h4>Table 2</h4>
-                  <button style={{ width: "100%", marginBottom: 10 }}>+</button>
-
-                  {guestList?.filter((item) => item.tableID == 2).map((task, idx) => (
-                    <div
-                      className="card"
-                      key={idx}
-                      id={task.id}
-                      draggable
-                      onDragStart={(e) => onDragStart(e)}
-                      onDragEnd={(e) => onDragEnd(e)}
-                    >
-                      <div className="img">
-                        <img src={task.image()} alt="box" />
-                      </div>
-                      <div className="card_right">
-                        <div className="status">{task.name}</div>
-                      </div>
-                    </div>
-                  ))}
-
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div
-          className="done small-box"
-          onDragLeave={(e) => onDragLeave(e)}
-          onDragEnter={(e) => onDragEnter(e)}
-          onDragEnd={(e) => onDragEnd(e)}
-          onDragOver={(e) => onDragOver(e)}
-          onDrop={(e) => onDrop(e, true, "3")}
-        >
-          <section className="drag_container">
-            <div className="container">
-              <div className="drag_column">
-                <div className="drag_row">
-                  <h4>Table 3</h4>
-                  <button style={{ width: "100%", marginBottom: 10 }}>+</button>
-                  {guestList?.filter((item) => item.tableID == 3).map((task, idx) => (
-                    <div
-                      className="card"
-                      key={idx}
-                      id={task.id}
-                      draggable
-                      onDragStart={(e) => onDragStart(e)}
-                      onDragEnd={(e) => onDragEnd(e)}
-                    >
-                      <div className="img">
-                        <img src={task.image()} alt="box" />
-                      </div>
-                      <div className="card_right">
-                        <div className="status">{task.name}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
+    
 
       </div>
 

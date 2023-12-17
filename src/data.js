@@ -4,7 +4,7 @@ import woman from "./assets/woman.png"
 export const TASKS = [
   {
     id: 1,
-    name: 'James',
+    name: 'Damilola Ajayi',
     gender: 'M',
     tableID: null,
     image(){
@@ -14,9 +14,9 @@ export const TASKS = [
   },
   {
     id: 2,
-    name: 'John',
+    name: 'Augustt Stark',
     gender: 'M',
-    tableID: 2,
+    tableID: null,
     image: function(){
         return  this.gender == 'M' ? man : woman
       },
@@ -24,7 +24,7 @@ export const TASKS = [
   },
   {
     id: 3,
-    name: 'Mary',
+    name: 'Veronica Dogbegah',
     gender: 'F',
     tableID: null,
     image: function(){
@@ -34,7 +34,7 @@ export const TASKS = [
   },
   {
     id: 4,
-    name: 'Jake',
+    name: 'Senyo Rockson',
     gender: 'M',
     tableID: null,
     image: function(){
@@ -44,7 +44,7 @@ export const TASKS = [
   },
   {
     id: 5,
-    name: 'Peggy',
+    name: 'Jay Nunana',
     gender: 'F',
     tableID: null,
     image: function(){
@@ -54,7 +54,7 @@ export const TASKS = [
   },
   {
     id: 6,
-    name: 'Pam',
+    name: 'Dela Malaika',
     gender: 'F',
     tableID: null,
     image: function(){
@@ -64,7 +64,7 @@ export const TASKS = [
   },
   {
     id: 7,
-    name: 'Peter',
+    name: 'Peter Parker',
     gender: 'M',
     tableID: null,
     image: function(){
@@ -74,7 +74,7 @@ export const TASKS = [
   },
   {
     id: 8,
-    name: 'Jackson',
+    name: 'Michael Jackson',
     gender: 'M',
     tableID: null,
     image(){
@@ -84,7 +84,7 @@ export const TASKS = [
   },
   {
     id: 9,
-    name: 'Jayden',
+    name: 'Jayden Smith',
     gender: 'M',
     tableID: null,
     image: function(){
@@ -94,7 +94,7 @@ export const TASKS = [
   },
   {
     id: 10,
-    name: 'Maggie',
+    name: 'Maggie Carter',
     gender: 'F',
     tableID: null,
     image: function(){
@@ -104,7 +104,7 @@ export const TASKS = [
   },
   {
     id: 11,
-    name: 'Jason',
+    name: 'Jason Bourne',
     gender: 'M',
     tableID: null,
     image: function(){
@@ -114,7 +114,7 @@ export const TASKS = [
   },
   {
     id: 12,
-    name: 'Edna',
+    name: 'Miss Edna ',
     gender: 'F',
     tableID: null,
     image: function(){
@@ -124,7 +124,7 @@ export const TASKS = [
   },
   {
     id: 13,
-    name: 'Ellie',
+    name: 'Ellie Gould',
     gender: 'F',
     tableID: null,
     image: function(){
@@ -134,7 +134,7 @@ export const TASKS = [
   },
   {
     id: 14,
-    name: 'Pat',
+    name: 'Patrick Wilson',
     gender: 'M',
     tableID: 3,
     image: function(){
