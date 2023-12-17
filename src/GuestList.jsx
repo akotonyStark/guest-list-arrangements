@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FaBeer, FaPencilAlt, FaSave, FaTrash } from "react-icons/fa";
+import {  FaPencilAlt, FaSave, FaTrash } from "react-icons/fa";
+import { GrPowerReset } from "react-icons/gr";
 
 const styles = {
   input: {
@@ -116,6 +117,12 @@ function GuestList({ guests }) {
 
   }
 
+  const handleSearch = (value) => {
+    const copy = [...guestList]
+    let filtered = copy.filter((guest) => guest.name.toLowerCase().includes(value.toLowerCase()))
+    setguestList(filtered)
+  }
+
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 4fr', gap: 50, }}>
 
@@ -136,7 +143,14 @@ function GuestList({ guests }) {
 
                 <div className=" main-list">
                   <h4>Guest List</h4>
-                  <button style={{ width: "100%", }}>Reset</button>
+            
+                  <div style={{display:'flex', gap:5}}>
+                  <input type="text" placeholder="search for guest.." 
+                  onChange={(e) =>  handleSearch(e.target.value)}
+                  style={{width:'85%', height:20, borderRadius:10, padding:10, border: 'none'}}/>
+                  <button style={{background:'#3B3B3B'}} title="Reset List" onClick={() => setguestList(guests)}><GrPowerReset/></button> 
+                  </div>
+                  
                   <div className="main-list">
                     {guestList?.filter((item) => item.assigned == false).map((task, idx) => (
                       <div
